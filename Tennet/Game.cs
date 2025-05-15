@@ -78,6 +78,5 @@ public class Game
         }
         Raylib.EndDrawing();
     }
-
-    public void AddBox(Box timeBox) => boxes.Add(timeBox);
+    
 }
