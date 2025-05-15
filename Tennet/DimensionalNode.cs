@@ -9,7 +9,7 @@ public class DimensionalNode
     public DimensionalNode BackwardsDimensionalNode;
     public DimensionalNode SplitPoint;
     public LinkedList<DimensionalNode> SameTimeNodes;
-    public String data;
+    public Vector2 data;
     public Box box;
     public static List<DimensionalNode> Nodes = new List<DimensionalNode>();
 
@@ -20,7 +20,7 @@ public class DimensionalNode
         BackwardsDimensionalNode = backwardsDimensionalNode;
         SplitPoint = splitPoint;
         SameTimeNodes = sameTimeNodes;
-        box = new Box(x, y, 25, 25) { Color = Color.Red };
+        box = new Box(x, y, 5, 5) { Color = Color.Red };
         Nodes.Add(this);
     }
     

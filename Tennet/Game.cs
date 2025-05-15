@@ -1,5 +1,5 @@
 namespace Tennet;
-
+using System.Linq;
 using System.Collections.Generic;
 using Raylib_cs;
 using System.Numerics;
@@ -13,9 +13,14 @@ public class Game
         Raylib.InitWindow(screenWidth, screenHeight, title);
         Raylib.SetTargetFPS(60);
     }
-
+    public DimensionalLinkedList time = new DimensionalLinkedList();
+    public Player player;
     public void Run()
     {
+        
+        player = new Player(time);
+        player.isAlive = true;
+        time.CurrentDimensionalNode = new DimensionalNode(null, null,null,null,0,10);
         while (!Raylib.WindowShouldClose())
         {
             Update();
@@ -24,17 +29,35 @@ public class Game
         
         Raylib.CloseWindow();
     }
-
+    
+  
     private void Update()
     {
-        // Add your update logic here
+        foreach (var p in Player.Players.ToList())
+        {
+            if (p.isAlive)
+            {
+                p.MovePlayer();
+            }
+        }
+        
+        if (Raylib.IsMouseButtonPressed(MouseButton.Left))
+        {
+            time.reverseDirection();
+        }
+        
     }
 
     private void Draw()
     {
+        
         Raylib.BeginDrawing();
         Raylib.ClearBackground(Color.Black);
-        
+        foreach (var p in Player.Players)
+        {
+            
+            p.DrawPlayer();
+        }
         foreach (var node in DimensionalNode.Nodes)
         {
             node.box.Draw();
@@ -52,11 +75,7 @@ public class Game
             {
                 node.box.DrawConnection(node.SameTimeNodes.Find(node).Previous.Value.box);
             }
-            
-            
         }
-        
-        
         Raylib.EndDrawing();
     }
 
